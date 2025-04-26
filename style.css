@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@500;700&family=Play:wght@700&family=Russo+One&display=swap');
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-family: 'Jost', 'Play', 'Russo One', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Arial', sans-serif;
     background: #222;
     color: #fff;
 }
@@ -14,10 +15,12 @@ body {
     margin-top: 24px;
 }
 h1 {
+    font-family: 'Russo One', 'Jost', 'Play', sans-serif;
     font-size: 1.6em;
     margin-bottom: 1em;
     color: #fff;
     text-align: center;
+    letter-spacing: 0.03em;
 }
 #concert-list {
     display: flex;
@@ -61,11 +64,13 @@ h1 {
     flex-direction: column;
 }
 .concert-title {
-    font-weight: 500;
+    font-family: 'Play', 'Jost', 'Russo One', sans-serif;
+    font-weight: 700;
     font-size: 1.1em;
     color: #fff;
     text-decoration: none;
     margin-bottom: 2px;
+    letter-spacing: 0.01em;
 }
 .concert-title:hover {
     text-decoration: underline;
@@ -75,17 +80,20 @@ h1 {
     color: #ff8a65;
     font-size: 0.96em;
     margin-bottom: 2px;
+    font-family: 'Jost', 'Play', 'Russo One', sans-serif;
 }
 .concert-meta {
     color: #fff;
     font-size: 0.98em;
     margin-bottom: 2px;
+    font-family: 'Jost', 'Play', 'Russo One', sans-serif;
 }
 .concert-price {
     color: #43a047;
     font-weight: 500;
     font-size: 1em;
     margin-top: 2px;
+    font-family: 'Jost', 'Play', 'Russo One', sans-serif;
 }
 .concert-price-white {
     color: #fff;
@@ -93,20 +101,22 @@ h1 {
 .concert-ticket-btn {
     display: inline-block;
     margin-top: 8px;
-    padding: 6px 20px;
+    padding: 6px 22px;
     background: #d32f2f;
     color: #fff;
     border: none;
     border-radius: 20px;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 1em;
+    font-family: 'Russo One', 'Jost', 'Play', sans-serif;
     transition: background 0.2s, box-shadow 0.2s;
     box-shadow: 0 2px 8px rgba(211,47,47,0.18);
-    min-width: 160px;
-    max-width: 90%;
+    min-width: 0;
+    max-width: 100%;
     text-align: center;
     white-space: nowrap;
+    width: auto;
 }
 .concert-ticket-btn:hover {
     background: #ff1744;

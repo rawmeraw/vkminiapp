@@ -100,12 +100,15 @@ function parseTime(date, time) {
 
 function sortConcerts(data) {
     return data.slice().sort((a, b) => {
+        // Сортировка по дате (возрастание)
         if (a.date < b.date) return -1;
         if (a.date > b.date) return 1;
+        // В пределах одной даты: по рейтингу (по убыванию)
         const ar = typeof a.rating === 'number' ? a.rating : 0;
         const br = typeof b.rating === 'number' ? b.rating : 0;
         if (ar > br) return -1;
         if (ar < br) return 1;
+        // Если рейтинг одинаковый — по времени (по возрастанию)
         const at = parseTime(a.date, a.time);
         const bt = parseTime(b.date, b.time);
         return at - bt;
