@@ -28,6 +28,7 @@ function getGlowColor(concert) {
 
 function getDayLabel(dateStr) {
     const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+    const monthsGen = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
     const now = new Date();
     const date = new Date(dateStr);
     const isToday = now.toDateString() === date.toDateString();
@@ -40,10 +41,10 @@ function getDayLabel(dateStr) {
     if (tomorrow.toDateString() === date.toDateString()) {
         return 'Завтра';
     }
-    // Возвращаем день недели и дату (без ведущего ноля в числе, месяц словами)
+    // Родительный падеж месяца
     const dayOfWeek = days[date.getDay()];
-    const day = date.getDate().toString().replace(/^0/, ''); // убрать ведущий ноль
-    const month = date.toLocaleString('ru-RU', { month: 'long' });
+    const day = date.getDate().toString().replace(/^0/, '');
+    const month = monthsGen[date.getMonth()];
     return `${dayOfWeek}, ${day} ${month}`;
 }
 
