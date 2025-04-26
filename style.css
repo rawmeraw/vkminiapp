@@ -218,7 +218,10 @@ h1 {
     }
     h1 {
         font-size: 1em;
-        margin-bottom: 0.4em;
+        margin-bottom: 1.2em;
+    }
+    .concert-list {
+        margin-top: 0.3em;
     }
     .concert-meta {
         flex-direction: column;
@@ -272,12 +275,12 @@ h1 {
 .meta-desktop .concert-price-white,
 .meta-desktop .price-link {
     position: relative;
-    top: -2px;
+    top: 0;
     margin-left: 8px;
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    display: flex;
+    display: block;
+    text-align: left;
+    margin-top: 0;
+}
+.meta-desktop .price-link {
+    margin-top: 4px;
 }
