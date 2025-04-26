@@ -55,16 +55,41 @@ function formatConcert(concert) {
     `;
 }
 
+function parseTime(date, time) {
+    // date: "2025-04-26", time: "18:00:00" or "18:00"
+    if (!date || !time) return 0;
+    const [h, m] = time.split(':');
+    return new Date(date + 'T' + h.padStart(2, '0') + ':' + m.padStart(2, '0')).getTime();
+}
+
+function sortConcerts(data) {
+    return data.slice().sort((a, b) => {
+        // Сортировка по дате
+        if (a.date < b.date) return -1;
+        if (a.date > b.date) return 1;
+        // В пределах одной даты: по рейтингу (по убыванию)
+        const ar = typeof a.rating === 'number' ? a.rating : 0;
+        const br = typeof b.rating === 'number' ? b.rating : 0;
+        if (ar > br) return -1;
+        if (ar < br) return 1;
+        // Если рейтинг одинаковый — по времени (по возрастанию)
+        const at = parseTime(a.date, a.time);
+        const bt = parseTime(b.date, b.time);
+        return at - bt;
+    });
+}
+
 async function loadConcerts() {
     const list = document.getElementById('concert-list');
     try {
         const resp = await fetch(API_URL);
         if (!resp.ok) throw new Error('Ошибка загрузки афиши');
-        const data = await resp.json();
+        let data = await resp.json();
         if (!Array.isArray(data) || !data.length) {
             list.innerHTML = '<div class="error">Нет концертов</div>';
             return;
         }
+        data = sortConcerts(data);
         list.innerHTML = data.map(formatConcert).join('');
     } catch (e) {
         list.innerHTML = `<div class="error">Ошибка: ${e.message}</div>`;
