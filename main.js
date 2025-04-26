@@ -75,13 +75,24 @@ function formatConcert(concert) {
     const link = concert.slug ? `https://permlive.ru/event/${concert.slug}` : '#';
     const dateLabel = date ? getDayLabel(date) + (time ? `, ${time}` : '') : '';
     const glowColor = getGlowColor(concert);
+    // Glow для заголовка в зависимости от рейтинга
+    let rating = parseFloat(concert.rating || 0);
+    let glowClass = '';
+    if (rating >= 0.2) {
+        // Порог появления glow — от 0.2 и выше
+        // Максимум glow при 3+
+        const intensity = Math.min((rating / 3), 1);
+        if (intensity > 0.1) {
+            glowClass = 'glow';
+        }
+    }
     // Цена теперь всегда в строке с датой
     let metaLine = `${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` → ${priceHtml}` : ''}`;
     return `
-    <div class=\"concert\">
-        <div class=\"concert-pic\" style=\"--concert-glow: ${glowColor};\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='${PLACEHOLDER_IMG}'\"></div>
+    <div class=\"concert\" style=\"--concert-glow: ${glowColor};\">
+        <div class=\"concert-pic\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='${PLACEHOLDER_IMG}'\"></div>
         <div class=\"concert-content\">
-            <a href=\"${link}\" class=\"concert-title\" target=\"_blank\">${title}</a>
+            <a href=\"${link}\" class=\"concert-title${glowClass ? ' ' + glowClass : ''}\" target=\"_blank\">${title}</a>
             ${tags ? `<div class=\"concert-tags\">${tags}</div>` : ''}
             <div class=\"concert-meta\">${metaLine}</div>
         </div>
