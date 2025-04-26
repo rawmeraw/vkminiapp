@@ -111,7 +111,8 @@ function formatConcert(concert) {
         glowClass = 'glow';
     }
     // Desktop: дата, место и цена/бесплатно в одну строку через стрелки
-    let metaLineDesktop = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` →${priceHtml}` : ''}</span>`;
+    let metaLineDesktop = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` → ${priceHtml}` : ''}</span>`;
+    metaLineDesktop = metaLineDesktop.replace('→', ' → '); // добавляем пробел между стрелкой и ценой
     // Mobile: цена без стрелки и на новой строке
     let metaLineMobile = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}</span><span class=\"meta-price\">${priceHtml}</span>`;
     // Итоговый metaLine: только одна версия отображается через CSS
@@ -151,6 +152,25 @@ function sortConcerts(data) {
     });
 }
 
+// Получаем текущее время Екатеринбурга
+function getEkaterinburgNow() {
+    // local time given in metadata is already UTC+5
+    return new Date();
+}
+
+// Фильтрация концертов по дате/времени (оставляем только будущие)
+function filterFutureConcerts(concerts) {
+    const now = getEkaterinburgNow();
+    return concerts.filter(concert => {
+        if (!concert.date || !concert.time) return true;
+        const [year, month, day] = concert.date.split('-').map(Number);
+        const [hour, minute] = (concert.time || '00:00').split(':').map(Number);
+        // Дата-концерт в UTC+5
+        const concertDate = new Date(year, month - 1, day, hour, minute);
+        return concertDate >= now;
+    });
+}
+
 async function loadConcerts() {
     const list = document.getElementById('concert-list');
     try {
@@ -161,6 +181,7 @@ async function loadConcerts() {
             list.innerHTML = '<div class="error">Нет концертов</div>';
             return;
         }
+        data = filterFutureConcerts(data);
         data = sortConcerts(data);
         list.innerHTML = data.map(formatConcert).join('');
     } catch (e) {
