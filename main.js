@@ -42,6 +42,11 @@ function formatConcert(concert) {
             dateLabel = `${dayLabel} в ${time}`;
         }
     }
+    // Кнопка Купить билет
+    let ticketBtn = '';
+    if (concert.tickets && typeof concert.tickets === 'string' && concert.tickets.trim()) {
+        ticketBtn = `<a href="${concert.tickets}" class="concert-ticket-btn" target="_blank">Купить билет</a>`;
+    }
     return `
     <div class="concert">
         <div class="concert-pic"><img src="${smallPic}" alt="pic" onerror="this.src='${PLACEHOLDER_IMG}'"></div>
@@ -50,6 +55,7 @@ function formatConcert(concert) {
             ${tags ? `<div class="concert-tags">${tags}</div>` : ''}
             <div class="concert-meta">${dateLabel}${place ? ' — ' + place : ''}</div>
             ${price ? `<div class="concert-price">${price}</div>` : ''}
+            ${ticketBtn}
         </div>
     </div>
     `;
