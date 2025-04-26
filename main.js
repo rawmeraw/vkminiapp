@@ -75,12 +75,20 @@ function formatConcert(concert) {
     const link = concert.slug ? `https://permlive.ru/event/${concert.slug}` : '#';
     const dateLabel = date ? getDayLabel(date) + (time ? `, ${time}` : '') : '';
     const glowColor = getGlowColor(concert);
+    // Цвет для фона плашки (очень тёмный оттенок glow)
+    let bgColor = glowColor.replace(/rgba?\(([^)]+)\)/, (m, c) => {
+        let parts = c.split(',').map(x => x.trim());
+        // Усилим насыщенность, но сделаем очень тёмким
+        if (parts.length >= 3) {
+            parts[3] = '0.12'; // почти не видно цвета
+            return `rgba(${parts.join(',')})`;
+        }
+        return m;
+    });
     // Glow для заголовка в зависимости от рейтинга
     let rating = parseFloat(concert.rating || 0);
     let glowClass = '';
     if (rating >= 0.2) {
-        // Порог появления glow — от 0.2 и выше
-        // Максимум glow при 3+
         const intensity = Math.min((rating / 3), 1);
         if (intensity > 0.1) {
             glowClass = 'glow';
@@ -89,7 +97,7 @@ function formatConcert(concert) {
     // Цена теперь всегда в строке с датой
     let metaLine = `${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` → ${priceHtml}` : ''}`;
     return `
-    <div class=\"concert\" style=\"--concert-glow: ${glowColor};\">
+    <div class=\"concert\" style=\"--concert-bg: ${bgColor};\">
         <div class=\"concert-pic\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='${PLACEHOLDER_IMG}'\"></div>
         <div class=\"concert-content\">
             <a href=\"${link}\" class=\"concert-title${glowClass ? ' ' + glowClass : ''}\" target=\"_blank\">${title}</a>

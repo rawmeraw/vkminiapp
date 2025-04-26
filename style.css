@@ -30,9 +30,9 @@ h1 {
 .concert {
     display: flex;
     align-items: flex-start;
-    padding: 18px 22px 18px 18px;
-    margin-bottom: 18px;
-    background: linear-gradient(90deg, rgba(43,43,43,0.97) 85%, var(--concert-glow, #222) 100%);
+    padding: 14px 12px 14px 12px;
+    margin-bottom: 14px;
+    background: var(--concert-bg, #232325);
     border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     transition: box-shadow 0.2s, background 0.2s;
@@ -70,19 +70,26 @@ h1 {
 }
 .concert-title {
     font-family: 'Play', 'Jost', 'Russo One', sans-serif;
-    font-size: 1.22em;
+    font-size: 1.08em;
     font-weight: 700;
     margin-bottom: 2px;
     color: #fff;
     letter-spacing: 0.01em;
-    transition: text-shadow 0.25s, color 0.25s;
+    transition: text-shadow 0.25s, color 0.25s, border 0.2s;
+    text-decoration: none;
+    border-bottom: none;
+    outline: none;
+    box-sizing: border-box;
 }
 .concert-title.glow {
     text-shadow: 0 0 12px #fff, 0 0 28px #fff;
 }
-.concert-title:hover {
-    text-decoration: underline;
-    color: #d32f2f;
+.concert-title:hover, .concert-title:focus {
+    color: #fff;
+    text-decoration: none;
+    border-bottom: none;
+    border-bottom: 2px dashed #d32f2f;
+    border-radius: 2px;
 }
 .concert-tags {
     color: #ff8a65;
@@ -162,4 +169,40 @@ h1 {
     color: #d32f2f;
     text-align: center;
     margin: 24px 0;
+}
+
+@media (max-width: 600px) {
+    .container {
+        max-width: 100vw;
+        padding: 6px;
+        margin-top: 8px;
+        border-radius: 0;
+    }
+    .concert {
+        padding: 10px 5px 10px 5px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+    .concert-pic {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        min-height: 48px;
+        margin-right: 10px;
+        top: 1px;
+    }
+    .concert-title {
+        font-size: 1em;
+        word-break: break-word;
+        line-height: 1.15;
+    }
+    .concert-meta, .concert-tags {
+        font-size: 0.96em;
+        word-break: break-word;
+        line-height: 1.13;
+    }
+    .price-link {
+        font-size: 1em;
+        padding: 2px 8px;
+    }
 }
