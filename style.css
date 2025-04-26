@@ -46,7 +46,8 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #d32f2f;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.2), 0 0 12px 2px rgba(255,255,255,0.2);
+    transition: box-shadow 0.2s;
 }
 .concert-pic img {
     width: 100%;
@@ -86,10 +87,13 @@ h1 {
     font-size: 1em;
     margin-top: 2px;
 }
+.concert-price-white {
+    color: #fff;
+}
 .concert-ticket-btn {
     display: inline-block;
     margin-top: 8px;
-    padding: 6px 18px;
+    padding: 6px 20px;
     background: #d32f2f;
     color: #fff;
     border: none;
@@ -97,10 +101,16 @@ h1 {
     text-decoration: none;
     font-weight: 500;
     font-size: 1em;
-    transition: background 0.2s;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(211,47,47,0.18);
+    min-width: 160px;
+    max-width: 90%;
+    text-align: center;
+    white-space: nowrap;
 }
 .concert-ticket-btn:hover {
     background: #ff1744;
+    box-shadow: 0 4px 12px rgba(211,47,47,0.28);
 }
 .loading {
     text-align: center;
