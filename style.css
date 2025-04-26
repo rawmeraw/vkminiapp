@@ -252,9 +252,6 @@ h1 {
     }
     .concert-meta .concert-price-white,
     .concert-meta .price-link {
-        text-align: center;
-        justify-content: center;
-        align-items: center;
         display: flex;
         width: 100%;
         margin-left: 0;
