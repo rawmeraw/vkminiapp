@@ -52,7 +52,8 @@ function formatConcert(concert) {
     const time = (concert.time || '').slice(0,5);
     const title = concert.title || '';
     const place = (concert.place && (concert.place.short_name || concert.place.name)) || '';
-    const price = concert.price ? `${concert.price}₽` : '';
+    // Цена
+    let price = concert.price !== null && concert.price !== undefined ? `${concert.price}₽` : '';
     // Исправлено: выводим имена тегов
     const tags = Array.isArray(concert.tags) && concert.tags.length ? concert.tags.map(tag => tag.name).join(' / ') : '';
     const smallPic = concert.small_pic || PLACEHOLDER_IMG;
@@ -60,9 +61,17 @@ function formatConcert(concert) {
     const link = concert.slug ? `https://permlive.ru/event/${concert.slug}` : '#';
     const dateLabel = date ? getDayLabel(date) + (time ? `, ${time}` : '') : '';
     const glowColor = getGlowColor(concert);
-    const priceHtml = price ? `<div class="concert-price">${price}</div>` : '';
-    const ticketBtn = concert.tickets ? `<a href="${concert.tickets}" class="concert-ticket-btn" target="_blank">Купить билет</a>` : '';
-
+    // Цена: если есть tickets — не показываем отдельно цену, если нет — цена белая
+    let priceHtml = '';
+    if (!concert.tickets && price) {
+        priceHtml = `<div class="concert-price concert-price-white">${price}</div>`;
+    }
+    // Кнопка Купить билет: если есть tickets, кнопка красная, ширина по тексту + паддинг
+    let ticketBtn = '';
+    if (concert.tickets && typeof concert.tickets === 'string' && concert.tickets.trim()) {
+        const btnText = price ? `Купить билет${price !== '0₽' ? ` от ${price}` : ''}` : 'Купить билет';
+        ticketBtn = `<a href="${concert.tickets}" class="concert-ticket-btn" target="_blank">${btnText}</a>`;
+    }
     return `
     <div class="concert">
         <div class="concert-pic" style="box-shadow: 0 0 0 4px ${glowColor}, 0 0 12px 2px ${glowColor};"><img src="${smallPic}" alt="pic" onerror="this.src='${PLACEHOLDER_IMG}'"></div>
@@ -89,8 +98,8 @@ function sortConcerts(data) {
         if (a.date < b.date) return -1;
         if (a.date > b.date) return 1;
         // В пределах одной даты: по рейтингу (по убыванию)
-        const ar = typeof a.rating === 'number' ? a.rating : 0;
-        const br = typeof b.rating === 'number' ? b.rating : 0;
+        const ar = parseFloat(a.rating || 0);
+        const br = parseFloat(b.rating || 0);
         if (ar > br) return -1;
         if (ar < br) return 1;
         // Если рейтинг одинаковый — по времени (по возрастанию)

@@ -92,14 +92,15 @@ h1 {
     font-family: 'Jost', 'Play', 'Russo One', sans-serif;
 }
 .concert-price {
-    color: #43a047;
-    font-weight: 500;
-    font-size: 1em;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 6px;
     margin-top: 2px;
-    font-family: 'Jost', 'Play', 'Russo One', sans-serif;
+    font-family: 'Russo One', 'Jost', 'Play', sans-serif;
+    color: #43ea6c;
 }
 .concert-price-white {
-    color: #fff;
+    color: #fff !important;
 }
 .concert-ticket-btn {
     display: inline-block;
