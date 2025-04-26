@@ -100,16 +100,17 @@ h1 {
     font-family: 'Jost', 'Play', 'Russo One', sans-serif;
 }
 .concert-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
+    color: #fff; 
+    font-size: 0.98em; 
+    margin-bottom: 2px; 
+    font-family: 'Jost', 'Play', 'Russo One', sans-serif; 
+    display: flex; 
+    flex-wrap: wrap; 
+    align-items: center; 
+    gap: 8px; 
 }
-.meta-left {
-    display: inline;
-}
-.meta-price {
-    display: inline;
+.meta-mobile { 
+    display: none; 
 }
 .concert-price {
     font-size: 1.1em;
@@ -205,20 +206,36 @@ h1 {
         word-break: break-word;
         line-height: 1.15;
     }
+    h1 {
+        font-size: 1.14em;
+        margin-bottom: 0.7em;
+    }
     .concert-meta {
         flex-direction: column;
         align-items: flex-start;
         gap: 0;
+        font-size: 0.93em;
+        margin-bottom: 1px;
     }
     .meta-left {
         display: block;
         margin-bottom: 2px;
+        width: 100%;
     }
     .meta-price {
-        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
         margin-left: 0;
         margin-top: 1px;
         padding-left: 0;
+    }
+    .concert-meta > :not(.meta-mobile) {
+        display: none !important;
+    }
+    .meta-mobile {
+        display: block;
     }
     .concert-meta .concert-price-white,
     .concert-meta .price-link {

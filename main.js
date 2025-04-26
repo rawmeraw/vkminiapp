@@ -106,17 +106,12 @@ function formatConcert(concert) {
         titleStyle = `text-shadow: 0 0 10px rgba(255,255,255,${glowAlpha}), 0 0 24px rgba(255,255,255,${glowAlpha});`;
         glowClass = 'glow';
     }
-    // Мобильная верстка: цена без стрелки и на новой строке
-    let isMobile = false;
-    if (typeof window !== 'undefined') {
-        isMobile = window.innerWidth <= 600;
-    }
-    let metaLeft = `${dateLabel}${place ? ` → ${place}` : ''}`;
-    let metaRight = priceHtml ? `${priceHtml}` : '';
-    let metaLine = '';
-    // Для мобильных: цена на новой строке и без стрелки
-    metaLine = `<span class=\"meta-left\">${metaLeft}</span>`;
-    if (metaRight) metaLine += `<span class=\"meta-price\">${metaRight}</span>`;
+    // Desktop: дата, место и цена в одну строку через стрелки
+    let metaLineDesktop = `${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` → ${priceHtml}` : ''}`;
+    // Mobile: цена без стрелки и на новой строке
+    let metaLineMobile = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}</span><span class=\"meta-price\">${priceHtml}</span>`;
+    // Итоговый metaLine: по умолчанию desktop, на мобиле — mobile
+    let metaLine = metaLineDesktop + `<span class=\"meta-mobile\">${metaLineMobile}</span>`;
     return `
     <div class=\"concert\" style=\"--concert-bg: ${bgColor}; --concert-pic-border: ${borderColor}; --concert-pic-glow: ${picGlow};\">
         <div class=\"concert-pic\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='${PLACEHOLDER_IMG}'\"></div>
