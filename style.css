@@ -208,6 +208,18 @@ h1 {
         word-break: break-word;
         line-height: 1.13;
     }
+    .concert-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+    }
+    .concert-meta .concert-price-white,
+    .concert-meta .price-link {
+        margin-left: 0;
+        margin-top: 1px;
+        display: block;
+        padding-left: 0;
+    }
     .price-link {
         font-size: 1em;
         padding: 2px 8px;
