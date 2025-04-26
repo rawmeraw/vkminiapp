@@ -53,8 +53,13 @@ function formatConcert(concert) {
     const time = (concert.time || '').slice(0,5);
     const title = concert.title || '';
     const place = (concert.place && (concert.place.short_name || concert.place.name)) || '';
-    // Цена
-    let price = concert.price !== null && concert.price !== undefined ? `${concert.price}₽` : '';
+    // Цена: если 0, null, undefined или '0', показываем "Бесплатно"
+    let price = '';
+    if (concert.price === 0 || concert.price === '0' || concert.price === 0.0 || concert.price === null || concert.price === undefined) {
+        price = 'Бесплатно';
+    } else {
+        price = `${concert.price}₽`;
+    }
     // Исправлено: выводим имена тегов
     const tags = Array.isArray(concert.tags) && concert.tags.length ? concert.tags.map(tag => tag.name).join(' / ') : '';
     const smallPic = concert.small_pic || PLACEHOLDER_IMG;
@@ -62,16 +67,12 @@ function formatConcert(concert) {
     const link = concert.slug ? `https://permlive.ru/event/${concert.slug}` : '#';
     const dateLabel = date ? getDayLabel(date) + (time ? `, ${time}` : '') : '';
     const glowColor = getGlowColor(concert);
-    // Цена: если есть tickets — не показываем отдельно цену, если нет — цена белая
-    let priceHtml = '';
-    if (!concert.tickets && price) {
-        priceHtml = `<div class="concert-price concert-price-white">${price}</div>`;
-    }
+    // Цена теперь всегда в строке с датой
+    let metaLine = `${dateLabel}${place ? ` → ${place}` : ''}${price ? ` → ${price}` : ''}`;
     // Кнопка Купить билет: если есть tickets, кнопка красная, ширина по тексту + паддинг
     let ticketBtn = '';
     if (concert.tickets && typeof concert.tickets === 'string' && concert.tickets.trim()) {
-        const btnText = price ? `Купить билет${price !== '0₽' ? ` от ${price}` : ''}` : 'Купить билет';
-        ticketBtn = `<a href="${concert.tickets}" class="concert-ticket-btn" target="_blank">${btnText}</a>`;
+        ticketBtn = `<a href="${concert.tickets}" class="concert-ticket-btn" target="_blank">Купить билет</a>`;
     }
     return `
     <div class="concert">
@@ -79,8 +80,7 @@ function formatConcert(concert) {
         <div class="concert-content">
             <a href="${link}" class="concert-title" target="_blank">${title}</a>
             ${tags ? `<div class="concert-tags">${tags}</div>` : ''}
-            <div class="concert-meta">${dateLabel}${place ? ' — ' + place : ''}</div>
-            ${priceHtml}
+            <div class="concert-meta">${metaLine}</div>
             ${ticketBtn}
         </div>
     </div>
