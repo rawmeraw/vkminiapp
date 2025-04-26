@@ -29,7 +29,7 @@ h1 {
 }
 .concert {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: 18px 22px 18px 18px;
     margin-bottom: 18px;
     background: #2b2b2b;
@@ -64,7 +64,7 @@ h1 {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 .concert-title {
     font-family: 'Play', 'Jost', 'Russo One', sans-serif;
@@ -105,7 +105,7 @@ h1 {
 .concert-ticket-btn {
     display: inline-block;
     margin-top: 18px;
-    padding: 8px 34px;
+    padding: 8px 0px;
     background: #d32f2f;
     color: #fff;
     border: none;
@@ -116,11 +116,11 @@ h1 {
     font-family: 'Russo One', 'Jost', 'Play', sans-serif;
     transition: background 0.2s, box-shadow 0.2s;
     box-shadow: 0 2px 8px rgba(211,47,47,0.18);
-    min-width: 0;
-    max-width: 100%;
+    min-width: 160px;
+    max-width: 260px;
     text-align: center;
     white-space: nowrap;
-    width: auto;
+    width: 50%;
 }
 .concert-ticket-btn:hover {
     background: #ff1744;
