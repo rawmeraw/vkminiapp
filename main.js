@@ -53,6 +53,11 @@ function formatConcert(concert) {
     const time = (concert.time || '').slice(0,5);
     const title = concert.title || '';
     const place = (concert.place && (concert.place.short_name || concert.place.name)) || '';
+    // Фото: если нет, ставим zhivoe_logo.jpg
+    let smallPic = concert.small_pic || '/home/rawmeraw/permlive/static/img/zhivoe_logo.jpg';
+    if (!smallPic || smallPic === PLACEHOLDER_IMG) {
+        smallPic = '/home/rawmeraw/permlive/static/img/zhivoe_logo.jpg';
+    }
     // Цена: если 0, null, undefined или '0', показываем "Бесплатно"
     let price = '';
     let priceHtml = '';
@@ -68,7 +73,6 @@ function formatConcert(concert) {
         }
     }
     const tags = Array.isArray(concert.tags) && concert.tags.length ? concert.tags.map(tag => tag.name).join(' / ') : '';
-    const smallPic = concert.small_pic || PLACEHOLDER_IMG;
     const link = concert.slug ? `https://permlive.ru/event/${concert.slug}` : '#';
     const dateLabel = date ? getDayLabel(date) + (time ? `, ${time}` : '') : '';
     const glowColor = getGlowColor(concert);
@@ -107,14 +111,14 @@ function formatConcert(concert) {
         glowClass = 'glow';
     }
     // Desktop: дата, место и цена в одну строку через стрелки
-    let metaLineDesktop = `${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` → ${priceHtml}` : ''}`;
+    let metaLineDesktop = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` → ${priceHtml}` : ''}</span>`;
     // Mobile: цена без стрелки и на новой строке
     let metaLineMobile = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}</span><span class=\"meta-price\">${priceHtml}</span>`;
-    // Итоговый metaLine: по умолчанию desktop, на мобиле — mobile
-    let metaLine = metaLineDesktop + `<span class=\"meta-mobile\">${metaLineMobile}</span>`;
+    // Итоговый metaLine: только одна версия отображается через CSS
+    let metaLine = `<span class=\"meta-desktop\">${metaLineDesktop}</span><span class=\"meta-mobile\">${metaLineMobile}</span>`;
     return `
     <div class=\"concert\" style=\"--concert-bg: ${bgColor}; --concert-pic-border: ${borderColor}; --concert-pic-glow: ${picGlow};\">
-        <div class=\"concert-pic\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='${PLACEHOLDER_IMG}'\"></div>
+        <div class=\"concert-pic\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='/home/rawmeraw/permlive/static/img/zhivoe_logo.jpg'\"></div>
         <div class=\"concert-content\">
             <a href=\"${link}\" class=\"concert-title${glowClass ? ' ' + glowClass : ''}\" style=\"${titleStyle}\" target=\"_blank\">${title}</a>
             ${tags ? `<div class=\"concert-tags\">${tags}</div>` : ''}
