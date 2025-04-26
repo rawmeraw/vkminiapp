@@ -15,7 +15,11 @@ function getDayLabel(dateStr) {
     if (tomorrow.toDateString() === date.toDateString()) {
         return 'Завтра';
     }
-    return days[date.getDay()];
+    // Возвращаем день недели и дату (без ведущего ноля в числе, месяц словами)
+    const dayOfWeek = days[date.getDay()];
+    const day = date.getDate().toString().replace(/^0/, ''); // убрать ведущий ноль
+    const month = date.toLocaleString('ru-RU', { month: 'long' });
+    return `${dayOfWeek}, ${day} ${month}`;
 }
 
 function formatConcert(concert) {
@@ -30,8 +34,13 @@ function formatConcert(concert) {
     const link = concert.slug ? `https://permlive.ru/event/${concert.slug}` : '#';
     // Красивая дата
     let dateLabel = '';
+    const dayLabel = getDayLabel(date);
     if (date && time) {
-        dateLabel = `${getDayLabel(date)}, ${date.split('-').reverse().join('.')} в ${time}`;
+        if (dayLabel === 'Сегодня' || dayLabel === 'Завтра') {
+            dateLabel = `${dayLabel} в ${time}`;
+        } else {
+            dateLabel = `${dayLabel} в ${time}`;
+        }
     }
     return `
     <div class="concert">
