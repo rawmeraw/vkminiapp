@@ -148,6 +148,9 @@ h1 {
     position: relative;
     top: 0;
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 .price-link:hover {
     background: #ff1744;
@@ -249,6 +252,11 @@ h1 {
     }
     .concert-meta .concert-price-white,
     .concert-meta .price-link {
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        width: 100%;
         margin-left: 0;
         margin-top: 1px;
         display: block;
@@ -271,4 +279,8 @@ h1 {
     margin-left: 8px;
     display: inline-block;
     vertical-align: middle;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }

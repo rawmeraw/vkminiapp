@@ -111,7 +111,7 @@ function formatConcert(concert) {
         glowClass = 'glow';
     }
     // Desktop: дата, место и цена в одну строку через стрелки
-    let metaLineDesktop = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` → ${priceHtml}` : ''}</span>`;
+    let metaLineDesktop = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` →${priceHtml}` : ''}</span>`;
     // Mobile: цена без стрелки и на новой строке
     let metaLineMobile = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}</span><span class=\"meta-price\">${priceHtml}</span>`;
     // Итоговый metaLine: только одна версия отображается через CSS
