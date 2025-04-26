@@ -76,7 +76,7 @@ function formatConcert(concert) {
     }
     return `
     <div class="concert">
-        <div class="concert-pic" style="box-shadow: 0 0 0 4px ${glowColor}, 0 0 12px 2px ${glowColor};"><img src="${smallPic}" alt="pic" onerror="this.src='${PLACEHOLDER_IMG}'"></div>
+        <div class="concert-pic" style="--concert-glow: ${glowColor};"><img src="${smallPic}" alt="pic" onerror="this.src='${PLACEHOLDER_IMG}'"></div>
         <div class="concert-content">
             <a href="${link}" class="concert-title" target="_blank">${title}</a>
             ${tags ? `<div class="concert-tags">${tags}</div>` : ''}
