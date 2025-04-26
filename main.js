@@ -75,29 +75,29 @@ function formatConcert(concert) {
     const link = concert.slug ? `https://permlive.ru/event/${concert.slug}` : '#';
     const dateLabel = date ? getDayLabel(date) + (time ? `, ${time}` : '') : '';
     const glowColor = getGlowColor(concert);
-    // Цвет для фона плашки (ещё темнее, почти не видно цвета)
+    // Цвет для фона плашки (ещё менее насыщенный)
     let bgColor = glowColor.replace(/rgba?\(([^)]+)\)/, (m, c) => {
         let parts = c.split(',').map(x => x.trim());
         if (parts.length >= 3) {
-            parts[3] = '0.08'; // ещё меньше насыщенность
+            parts[3] = '0.05'; // максимально низкая насыщенность
             return `rgba(${parts.join(',')})`;
         }
         return m;
     });
-    // Темная обводка для concert-pic
+    // Темная обводка для concert-pic (ещё менее насыщенная)
     let borderColor = bgColor.replace(/rgba?\(([^)]+)\)/, (m, c) => {
         let parts = c.split(',').map(x => x.trim());
         if (parts.length >= 3) {
-            parts[3] = '0.32'; // темнее, чуть насыщеннее
+            parts[3] = '0.13'; // очень темная
             return `rgba(${parts.join(',')})`;
         }
         return m;
     });
-    // Светлый насыщенный glow для concert-pic
+    // Светлый насыщенный glow для concert-pic (ещё светлее)
     let picGlow = glowColor.replace(/rgba?\(([^)]+)\)/, (m, c) => {
         let parts = c.split(',').map(x => x.trim());
         if (parts.length >= 3) {
-            parts[3] = '0.45'; // ярче и насыщеннее
+            parts[3] = '0.58'; // ещё светлее и насыщеннее
             return `rgba(${parts.join(',')})`;
         }
         return m;
@@ -115,7 +115,7 @@ function formatConcert(concert) {
     let metaLine = `${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` → ${priceHtml}` : ''}`;
     return `
     <div class=\"concert\" style=\"--concert-bg: ${bgColor}; --concert-pic-border: ${borderColor}; --concert-pic-glow: ${picGlow};\">
-        <div class=\"concert-pic\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='${PLACEHOLDER_IMG}'\"></div>
+        <div class=\"concert-pic\" style=\"margin-left: 7px;\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='${PLACEHOLDER_IMG}'\"></div>
         <div class=\"concert-content\">
             <a href=\"${link}\" class=\"concert-title${glowClass ? ' ' + glowClass : ''}\" target=\"_blank\">${title}</a>
             ${tags ? `<div class=\"concert-tags\">${tags}</div>` : ''}
