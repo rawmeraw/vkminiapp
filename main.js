@@ -53,30 +53,15 @@ function formatConcert(concert) {
     const title = concert.title || '';
     const place = (concert.place && (concert.place.short_name || concert.place.name)) || '';
     const price = concert.price ? `${concert.price}₽` : '';
-    const tags = Array.isArray(concert.tags) && concert.tags.length ? concert.tags.join(' / ') : '';
+    // Исправлено: выводим имена тегов
+    const tags = Array.isArray(concert.tags) && concert.tags.length ? concert.tags.map(tag => tag.name).join(' / ') : '';
     const smallPic = concert.small_pic || PLACEHOLDER_IMG;
     // Ссылка на событие по slug
     const link = concert.slug ? `https://permlive.ru/event/${concert.slug}` : '#';
-    // Glow для аватарки
+    const dateLabel = date ? getDayLabel(date) + (time ? `, ${time}` : '') : '';
     const glowColor = getGlowColor(concert);
-    // Красивая дата
-    let dateLabel = '';
-    const dayLabel = getDayLabel(date);
-    if (date && time) {
-        if (dayLabel === 'Сегодня' || dayLabel === 'Завтра') {
-            dateLabel = `${dayLabel} в ${time}`;
-        } else {
-            dateLabel = `${dayLabel} в ${time}`;
-        }
-    }
-    // Кнопка Купить билет
-    let ticketBtn = '';
-    if (concert.tickets && typeof concert.tickets === 'string' && concert.tickets.trim()) {
-        const btnText = price ? `Купить билет от ${price}` : 'Купить билет';
-        ticketBtn = `<a href="${concert.tickets}" class="concert-ticket-btn" target="_blank">${btnText}</a>`;
-    }
-    // Цена: если есть билеты — не показываем отдельно цену, если нет — цена белая
-    const priceHtml = (!concert.tickets && price) ? `<div class="concert-price concert-price-white">${price}</div>` : '';
+    const priceHtml = price ? `<div class="concert-price">${price}</div>` : '';
+    const ticketBtn = concert.tickets ? `<a href="${concert.tickets}" class="concert-ticket-btn" target="_blank">Купить билет</a>` : '';
 
     return `
     <div class="concert">
