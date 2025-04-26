@@ -53,10 +53,10 @@ function formatConcert(concert) {
     const time = (concert.time || '').slice(0,5);
     const title = concert.title || '';
     const place = (concert.place && (concert.place.short_name || concert.place.name)) || '';
-    // Фото: если нет, ставим zhivoe_logo.jpg
-    let smallPic = concert.small_pic || '/home/rawmeraw/permlive/static/img/zhivoe_logo.jpg';
+    // Фото: если нет, ставим zhivoe_logo.jpg из vkminiapp
+    let smallPic = concert.small_pic || 'zhivoe_logo.jpg';
     if (!smallPic || smallPic === PLACEHOLDER_IMG) {
-        smallPic = '/home/rawmeraw/permlive/static/img/zhivoe_logo.jpg';
+        smallPic = 'zhivoe_logo.jpg';
     }
     // Цена: если 0, null, undefined или '0', показываем "Бесплатно"
     let price = '';
@@ -110,7 +110,7 @@ function formatConcert(concert) {
         titleStyle = `text-shadow: 0 0 10px rgba(255,255,255,${glowAlpha}), 0 0 24px rgba(255,255,255,${glowAlpha});`;
         glowClass = 'glow';
     }
-    // Desktop: дата, место и цена в одну строку через стрелки
+    // Desktop: дата, место и цена/бесплатно в одну строку через стрелки
     let metaLineDesktop = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` →${priceHtml}` : ''}</span>`;
     // Mobile: цена без стрелки и на новой строке
     let metaLineMobile = `<span class=\"meta-left\">${dateLabel}${place ? ` → ${place}` : ''}</span><span class=\"meta-price\">${priceHtml}</span>`;
@@ -118,7 +118,7 @@ function formatConcert(concert) {
     let metaLine = `<span class=\"meta-desktop\">${metaLineDesktop}</span><span class=\"meta-mobile\">${metaLineMobile}</span>`;
     return `
     <div class=\"concert\" style=\"--concert-bg: ${bgColor}; --concert-pic-border: ${borderColor}; --concert-pic-glow: ${picGlow};\">
-        <div class=\"concert-pic\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='/home/rawmeraw/permlive/static/img/zhivoe_logo.jpg'\"></div>
+        <div class=\"concert-pic\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='zhivoe_logo.jpg'\"></div>
         <div class=\"concert-content\">
             <a href=\"${link}\" class=\"concert-title${glowClass ? ' ' + glowClass : ''}\" style=\"${titleStyle}\" target=\"_blank\">${title}</a>
             ${tags ? `<div class=\"concert-tags\">${tags}</div>` : ''}
