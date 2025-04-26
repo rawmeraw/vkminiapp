@@ -55,10 +55,18 @@ function formatConcert(concert) {
     const place = (concert.place && (concert.place.short_name || concert.place.name)) || '';
     // Цена: если 0, null, undefined или '0', показываем "Бесплатно"
     let price = '';
+    let priceHtml = '';
     if (concert.price === 0 || concert.price === '0' || concert.price === 0.0 || concert.price === null || concert.price === undefined) {
         price = 'Бесплатно';
+        priceHtml = price;
     } else {
         price = `${concert.price}₽`;
+        // Если есть tickets — делаем цену ссылкой с красным фоном
+        if (concert.tickets && typeof concert.tickets === 'string' && concert.tickets.trim()) {
+            priceHtml = `<a href=\"${concert.tickets}\" class=\"price-link\" target=\"_blank\">${price}</a>`;
+        } else {
+            priceHtml = price;
+        }
     }
     // Исправлено: выводим имена тегов
     const tags = Array.isArray(concert.tags) && concert.tags.length ? concert.tags.map(tag => tag.name).join(' / ') : '';
@@ -68,20 +76,14 @@ function formatConcert(concert) {
     const dateLabel = date ? getDayLabel(date) + (time ? `, ${time}` : '') : '';
     const glowColor = getGlowColor(concert);
     // Цена теперь всегда в строке с датой
-    let metaLine = `${dateLabel}${place ? ` → ${place}` : ''}${price ? ` → ${price}` : ''}`;
-    // Кнопка Купить билет: если есть tickets, кнопка красная, ширина по тексту + паддинг
-    let ticketBtn = '';
-    if (concert.tickets && typeof concert.tickets === 'string' && concert.tickets.trim()) {
-        ticketBtn = `<a href="${concert.tickets}" class="concert-ticket-btn" target="_blank">Купить билет</a>`;
-    }
+    let metaLine = `${dateLabel}${place ? ` → ${place}` : ''}${priceHtml ? ` → ${priceHtml}` : ''}`;
     return `
-    <div class="concert">
-        <div class="concert-pic" style="--concert-glow: ${glowColor};"><img src="${smallPic}" alt="pic" onerror="this.src='${PLACEHOLDER_IMG}'"></div>
-        <div class="concert-content">
-            <a href="${link}" class="concert-title" target="_blank">${title}</a>
-            ${tags ? `<div class="concert-tags">${tags}</div>` : ''}
-            <div class="concert-meta">${metaLine}</div>
-            ${ticketBtn}
+    <div class=\"concert\">
+        <div class=\"concert-pic\" style=\"--concert-glow: ${glowColor};\"><img src=\"${smallPic}\" alt=\"pic\" onerror=\"this.src='${PLACEHOLDER_IMG}'\"></div>
+        <div class=\"concert-content\">
+            <a href=\"${link}\" class=\"concert-title\" target=\"_blank\">${title}</a>
+            ${tags ? `<div class=\"concert-tags\">${tags}</div>` : ''}
+            <div class=\"concert-meta\">${metaLine}</div>
         </div>
     </div>
     `;
