@@ -233,7 +233,7 @@ h1 {
     }
     .meta-price {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         width: 100%;
         margin-left: 0;
@@ -258,4 +258,17 @@ h1 {
         font-size: 1em;
         padding: 2px 8px;
     }
+}
+
+.meta-desktop .meta-left {
+    display: inline;
+    vertical-align: middle;
+}
+.meta-desktop .concert-price-white,
+.meta-desktop .price-link {
+    position: relative;
+    top: -2px;
+    margin-left: 8px;
+    display: inline-block;
+    vertical-align: middle;
 }
