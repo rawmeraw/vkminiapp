@@ -26,8 +26,8 @@ function formatConcert(concert) {
     const price = concert.price ? `${concert.price}₽` : '';
     const tags = Array.isArray(concert.tags) && concert.tags.length ? concert.tags.join(' / ') : '';
     const smallPic = concert.small_pic || PLACEHOLDER_IMG;
-    // Ссылка на событие
-    const link = concert.id ? `https://permlive.ru/concerts/${concert.id}` : '#';
+    // Ссылка на событие по slug
+    const link = concert.slug ? `https://permlive.ru/event/${concert.slug}` : '#';
     // Красивая дата
     let dateLabel = '';
     if (date && time) {
